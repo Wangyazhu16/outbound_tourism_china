@@ -36,11 +36,11 @@ ggplot(df, aes(x = r.squared, y = country)) +
 
 exg <- read_csv("exchange_rate.csv")
 
-growth <- function(x) {
-  min <- range(x, na.rm = T)[1]
-  max <- range(x, na.rm = T)[2]
-  grow <- (max - min) / min
-}
+# growth <- function(x) {
+#   min <- range(x, na.rm = T)[1]
+#   max <- range(x, na.rm = T)[2]
+#   grow <- (max - min) / min
+# }
 grow <- map_dbl(dat, growth)
 
 df1 <- data.frame(country, grow) %>% 
