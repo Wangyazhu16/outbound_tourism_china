@@ -5,6 +5,18 @@ library(rvest)
 library(xml2)
 library(stringr)
 
+# 读入数据
+raw <- read_csv("outbound_tourism_china.csv")
+
+# 选择TFR统计方式，筛选出TFR统计方式对应的国家
+raw1 <- raw %>% filter(SERIES == "TFR") %>% 
+  # 增加国家列
+  mutate(country = X1) %>% 
+  # 删除SERIES列，change2016-2015列
+  select(-X1, -SERIES, -25) %>% 
+  # 将国家放在第一列
+  select(country, everything())
+
 # 读取货币代码表
 cur_sym <- read_csv("currency_symbol.csv")
 
@@ -72,9 +84,6 @@ chg_name <- function(x) {
 # 为数据框汇率列命名
 rate_cor <- map(rate_cor, chg_name)
 
-
-
-
-
-
+# 保存为RData
+save(rate_cor, file = "rate_cor.RData")
 
